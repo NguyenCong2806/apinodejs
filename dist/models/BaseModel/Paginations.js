@@ -4,8 +4,7 @@ class Paginations {
     constructor() {
         this.perPage = 0;
         this.page = 10;
-        this.value = null;
-        this.field = null;
+        this.keyword = null;
     }
 }
 exports.default = Paginations;

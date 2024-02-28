@@ -1,6 +1,10 @@
-export default class Paginations {
+import { FilterQuery } from 'mongoose';
+
+export default class Paginations<T> {
   perPage: number = 0;
   page: number = 10;
-  value: string = null;
-  field: string = null;
+  keyword?: string = null;
+  condition?: FilterQuery<T>;
+  // value: string = null;
+  // field: string = null;
 }

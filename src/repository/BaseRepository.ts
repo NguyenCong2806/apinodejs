@@ -10,23 +10,24 @@ export abstract class BaseRepository<T extends BaseEntity>
   protected constructor(private readonly _model: Model<T>) {
     this._model = _model;
   }
-  async finds(item: Paginations): Promise<Results<T>> {
+  async finds(item: Paginations<T>): Promise<Results<T>> {
     const result = new Results<T>();
     try {
       const counts = (await this._model.find()).length;
       result.pageIndex = item.perPage;
       result.totalCount = counts;
       result.totalPage = Math.round(counts / item.perPage);
-      if (item.field != null) {
+      if (item.condition != null) {
         result.items = await this._model
-          .where(`${item.field}`, { $regex: item.value })
-          .limit(item.perPage)
-          .skip(item.page * item.perPage);
+          // .where(`${item.field}`, { $regex: item.value })
+          .where(item.condition)
+          .skip(item.page * (item.perPage - 1))
+          .limit(item.perPage);
       } else {
         result.items = await this._model
           .find()
-          .limit(item.perPage)
-          .skip(item.page * item.perPage);
+          .skip(item.page * (item.perPage - 1))
+          .limit(item.perPage);
       }
     } catch (error: any) {
       throw new Error(error.message);

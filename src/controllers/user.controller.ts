@@ -8,10 +8,11 @@ import {
   Put,
 } from '@nestjs/common';
 import { User } from './../models/database/User';
-import { Controller, Get } from '@nestjs/common';
 import Results from 'src/models/BaseModel/Results';
 import { UserService } from 'src/services/user/user.service';
 import Paginations from 'src/models/BaseModel/Paginations';
+import { UpdateTodoDto } from './../models/viewmodel/UpdateUserDto';
+import { CreateTodoDto } from './../models/viewmodel/CreateUserDto';
 
 @Controller('user')
 export class UsersController {
@@ -19,25 +20,30 @@ export class UsersController {
 
   @Get('getall')
   async get(
-    @Param('paginations') paginations: Paginations,
+    @Param('perPage') perPage: number,
+    @Param('page') page: number,
   ): Promise<Results<User>> {
-    return this.usersService.finds(paginations);
+    const pagination = new Paginations();
+    pagination.perPage = perPage | 1;
+    pagination.page = page | 10;
+    //pagination.field = null;
+    return this.usersService.finds(pagination);
   }
-  @Get(':id')
+  @Get('getbyuse/:id')
   async find(@Param('id') id: string) {
     return await this.usersService.findOne(id);
   }
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
+  @Post('adduser')
+  async create(@Body() createUserDto: CreateTodoDto) {
     return await this.usersService.create(createUserDto);
   }
-  @Put(':id')
+  @Put('edituser/:id')
   async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return await this.service.update(id, updateTodoDto);
+    return await this.usersService.update(id, updateTodoDto);
   }
 
-  @Delete(':id')
+  @Delete('deluser/:id')
   async delete(@Param('id') id: string) {
-    return await this.service.delete(id);
+    return await this.usersService.remove(id);
   }
 }

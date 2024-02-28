@@ -31,7 +31,7 @@ export interface Write<M> {
     remove(id: string): Promise<boolean>;
 }
 export interface Read<M> {
-    finds(item: Paginations): Promise<Results<M>>;
+    finds(item: Paginations<M>): Promise<Results<M>>;
     find(): Promise<Array<M>>;
     findOne(id: string): Promise<M>;
     findOneValue(condition?: FilterQuery<M>): Promise<M>;

@@ -21,7 +21,7 @@ export abstract class BaseService<M extends BaseEntity>
   async remove(id: string): Promise<boolean> {
     return await this.repository.delete(id);
   }
-  async finds(item: Paginations): Promise<Results<M>> {
+  async finds(item: Paginations<M>): Promise<Results<M>> {
     return await this.repository.finds(item);
   }
   async findOne(id: string): Promise<M> {

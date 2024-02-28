@@ -3,7 +3,7 @@ import Paginations from 'src/models/BaseModel/Paginations';
 import Results from 'src/models/BaseModel/Results';
 
 export interface IBaseRepository<T> {
-  finds(item: Paginations): Promise<Results<T>>;
+  finds(item: Paginations<T>): Promise<Results<T>>;
   find(): Promise<Array<T>>;
   findOne(id: any): Promise<T>;
   findOneValue(condition?: FilterQuery<T>): Promise<T>;

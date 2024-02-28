@@ -30,7 +30,7 @@ import { Model, FilterQuery } from 'mongoose';
 export declare abstract class BaseRepository<T extends BaseEntity> implements IBaseRepository<T> {
     private readonly _model;
     protected constructor(_model: Model<T>);
-    finds(item: Paginations): Promise<Results<T>>;
+    finds(item: Paginations<T>): Promise<Results<T>>;
     find(): Promise<T[]>;
     findOne(id: any): Promise<T>;
     findOneValue(condition?: FilterQuery<T>): Promise<T>;
