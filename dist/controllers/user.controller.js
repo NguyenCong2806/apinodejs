@@ -18,65 +18,78 @@ const user_service_1 = require("../services/user/user.service");
 const Paginations_1 = require("../models/BaseModel/Paginations");
 const UpdateUserDto_1 = require("./../models/viewmodel/UpdateUserDto");
 const CreateUserDto_1 = require("./../models/viewmodel/CreateUserDto");
+const SerachPara_1 = require("../models/BaseModel/SerachPara");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async get(perPage, page) {
+    async get(serachPara, res) {
         const pagination = new Paginations_1.default();
-        pagination.perPage = perPage | 1;
-        pagination.page = page | 10;
-        return this.usersService.finds(pagination);
+        pagination.perPage = serachPara.pageindex;
+        pagination.page = serachPara.pagesize;
+        if (serachPara.keyword != null) {
+            pagination.condition = { username: { $regex: serachPara.keyword } };
+        }
+        const respo = await this.usersService.finds(pagination);
+        res.status(common_1.HttpStatus.OK).json(respo);
     }
-    async find(id) {
-        return await this.usersService.findOne(id);
+    async find(id, res) {
+        const respo = await this.usersService.findOne(id);
+        res.status(common_1.HttpStatus.OK).json(respo);
     }
-    async create(createUserDto) {
-        return await this.usersService.create(createUserDto);
+    async create(createUserDto, res) {
+        const respo = await this.usersService.create(createUserDto);
+        res.status(common_1.HttpStatus.CREATED).json(respo);
     }
-    async update(id, updateTodoDto) {
-        return await this.usersService.update(id, updateTodoDto);
+    async update(id, updateTodoDto, res) {
+        const respo = await this.usersService.update(id, updateTodoDto);
+        res.status(common_1.HttpStatus.OK).json(respo);
     }
-    async delete(id) {
-        return await this.usersService.remove(id);
+    async delete(id, res) {
+        const respo = await this.usersService.remove(id);
+        res.status(common_1.HttpStatus.OK).json(respo);
     }
 };
 exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Get)('getall'),
-    __param(0, (0, common_1.Param)('perPage')),
-    __param(1, (0, common_1.Param)('page')),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:paramtypes", [SerachPara_1.default, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "get", null);
 __decorate([
     (0, common_1.Get)('getbyuse/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "find", null);
 __decorate([
     (0, common_1.Post)('adduser'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [CreateUserDto_1.CreateTodoDto]),
+    __metadata("design:paramtypes", [CreateUserDto_1.CreateTodoDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)('edituser/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto]),
+    __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('deluser/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "delete", null);
 exports.UsersController = UsersController = __decorate([

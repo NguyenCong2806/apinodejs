@@ -13,18 +13,18 @@ class BaseRepository {
             const counts = (await this._model.find()).length;
             result.pageIndex = item.perPage;
             result.totalCount = counts;
-            result.totalPage = Math.round(counts / item.perPage);
+            result.totalPage = Math.ceil(counts / item.page);
             if (item.condition != null) {
                 result.items = await this._model
-                    .where(item.condition)
+                    .find(item.condition)
                     .skip(item.page * (item.perPage - 1))
-                    .limit(item.perPage);
+                    .limit(item.page).sort({ createddate: -1 });
             }
             else {
                 result.items = await this._model
                     .find()
                     .skip(item.page * (item.perPage - 1))
-                    .limit(item.perPage);
+                    .limit(item.page).sort({ createddate: -1 });
             }
         }
         catch (error) {

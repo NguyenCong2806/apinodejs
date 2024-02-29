@@ -3,6 +3,7 @@ import { BaseEntity } from './../models/database/BaseEntity';
 import Paginations from 'src/models/BaseModel/Paginations';
 import Results from 'src/models/BaseModel/Results';
 import { Model, FilterQuery } from 'mongoose';
+import { ExceptionFilter } from '@nestjs/common';
 
 export abstract class BaseRepository<T extends BaseEntity>
   implements IBaseRepository<T>
@@ -16,19 +17,18 @@ export abstract class BaseRepository<T extends BaseEntity>
       const counts = (await this._model.find()).length;
       result.pageIndex = item.perPage;
       result.totalCount = counts;
-      result.totalPage = Math.round(counts / item.perPage);
+      result.totalPage = Math.ceil(counts / item.page);
       if (item.condition != null) {
         result.items = await this._model
-          // .where(`${item.field}`, { $regex: item.value })
-          .where(item.condition)
+          .find(item.condition)
           .skip(item.page * (item.perPage - 1))
-          .limit(item.perPage);
+          .limit(item.page).sort({createddate: -1});
       } else {
         result.items = await this._model
           .find()
-          .skip(item.page * (item.perPage - 1))
-          .limit(item.perPage);
-      }
+          .skip(item.page * (item.perPage-1))
+          .limit(item.page).sort({createddate: -1});
+      } 
     } catch (error: any) {
       throw new Error(error.message);
     }

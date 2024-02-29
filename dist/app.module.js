@@ -13,7 +13,11 @@ const app_service_1 = require("./app.service");
 const config_1 = require("@nestjs/config");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_module_1 = require("./controllers/user.module");
+const logger_middleware_1 = require("./middlewares/logger.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
