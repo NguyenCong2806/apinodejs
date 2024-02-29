@@ -7,10 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersModule = void 0;
-const User_1 = require("./../models/database/User");
-const UserRepository_1 = require("./../repository/user/UserRepository");
-const user_service_1 = require("./../services/user/user.service");
-const user_controller_1 = require("./user.controller");
+const User_1 = require("../models/database/User");
+const UserRepository_1 = require("../repository/user/UserRepository");
+const user_service_1 = require("../services/user/user.service");
+const user_controller_1 = require("../controllers/user.controller");
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 let UsersModule = class UsersModule {
@@ -24,6 +24,7 @@ exports.UsersModule = UsersModule = __decorate([
             user_service_1.UserService,
             { provide: 'IUserRepository', useClass: UserRepository_1.UsersRepository },
         ],
+        exports: [user_service_1.UserService],
     })
 ], UsersModule);
 //# sourceMappingURL=user.module.js.map
