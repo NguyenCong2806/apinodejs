@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { User } from './../models/database/User';
-import Results from 'src/models/BaseModel/Results';
 import { UserService } from 'src/services/user/user.service';
 import Paginations from 'src/models/BaseModel/Paginations';
 import { UpdateTodoDto } from './../models/viewmodel/UpdateUserDto';

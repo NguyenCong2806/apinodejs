@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './module/app.module';
 import { AllExceptionFilter } from './Filter/AllExceptionFilter';
+import helmet from 'helmet';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.useGlobalFilters(new AllExceptionFilter());
+  app.use(helmet());
   await app.listen(parseInt(process.env.PORT, 10) || 3000);
   console.log(
     'server runing',
