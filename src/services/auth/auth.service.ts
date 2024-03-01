@@ -16,7 +16,6 @@ export class AuthService {
     // Check if user exists
     const filter = { username: data.username };
     const user = await this.usersService.findOneValue(filter);
-    console.log(user);
     if (!user) throw new BadRequestException('Tài khoản không tồn tại!');
     const passwordMatches = await argon2.verify(user.password, data.password);
     if (!passwordMatches) throw new BadRequestException('Nhập sai mật khẩu!');
@@ -30,7 +29,7 @@ export class AuthService {
     res.role = user.role;
     res.status = true;
     res.statuscode = 200;
-    res.userid = user.id;
+    res.userid = user._id;
     res.username = user.username;
     res.accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

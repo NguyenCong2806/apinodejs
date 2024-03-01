@@ -24,7 +24,6 @@ let AuthService = class AuthService {
         const res = new authvm_1.authvm();
         const filter = { username: data.username };
         const user = await this.usersService.findOneValue(filter);
-        console.log(user);
         if (!user)
             throw new common_1.BadRequestException('Tài khoản không tồn tại!');
         const passwordMatches = await argon2.verify(user.password, data.password);
@@ -39,7 +38,7 @@ let AuthService = class AuthService {
         res.role = user.role;
         res.status = true;
         res.statuscode = 200;
-        res.userid = user.id;
+        res.userid = user._id;
         res.username = user.username;
         res.accessToken = this.jwtService.sign(payload, {
             secret: process.env.JWT_SECRET,

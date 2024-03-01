@@ -20,7 +20,6 @@ const jwt_1 = require("@nestjs/jwt");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const throttler_1 = require("@nestjs/throttler");
-const mail_module_1 = require("./mail/mail.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -58,7 +57,6 @@ exports.AppModule = AppModule = __decorate([
                     limit: 100,
                 },
             ]),
-            mail_module_1.MailModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

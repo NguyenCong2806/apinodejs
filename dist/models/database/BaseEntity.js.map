@@ -1,1 +1,1 @@
-{"version":3,"file":"BaseEntity.js","sourceRoot":"","sources":["../../../src/models/database/BaseEntity.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,+CAAwC;AAExC,MAAa,UAAU;CAKtB;AALD,gCAKC;AAHC;IADC,IAAA,eAAI,GAAE;;sCACI;AAEX;IADC,IAAA,eAAI,GAAE;8BACM,IAAI;+CAAC"}
+{"version":3,"file":"BaseEntity.js","sourceRoot":"","sources":["../../../src/models/database/BaseEntity.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,+CAAwC;AAExC,MAAa,UAAU;CAKtB;AALD,gCAKC;AAHC;IADC,IAAA,eAAI,GAAE;;uCACK;AAEZ;IADC,IAAA,eAAI,GAAE;8BACM,IAAI;+CAAC"}
