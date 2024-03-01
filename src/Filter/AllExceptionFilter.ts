@@ -8,6 +8,7 @@ import {
 import { HttpArgumentsHost } from '@nestjs/common/interfaces/features/arguments-host.interface';
 import { Response, Request } from 'express';
 
+
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException | Error, host: ArgumentsHost): void {

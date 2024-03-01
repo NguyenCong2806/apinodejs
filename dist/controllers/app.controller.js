@@ -10,25 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
+const roles_decorator_1 = require("./../decorator/roles.decorator");
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("../services/app/app.service");
+const auth_guard_1 = require("../Guard/auth.guard");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
     }
-    getHello() {
-        return this.appService.getHello();
-    }
 };
 exports.AppController = AppController;
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, roles_decorator_1.Roles)('admin', 'member'),
     __metadata("design:paramtypes", [app_service_1.AppService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

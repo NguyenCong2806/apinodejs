@@ -1,3 +1,30 @@
-import { User } from '../../database/User';
 
-export class CreateTodoDto extends User {}
+import {
+    validate,
+    validateOrReject,
+    Contains,
+    IsInt,
+    Length,
+    IsEmail,
+    IsFQDN,
+    IsDate,
+    Min,
+    Max,
+    IsNotEmpty,
+    IsString,
+  } from 'class-validator';
+
+export class CreateTodoDto{
+    @IsString()
+    @IsNotEmpty({message:"Không được bỏ trống!"})
+    username: string;
+
+    @IsString()
+    @IsNotEmpty({message:"Không được bỏ trống!"})
+    @IsEmail()
+    email: string;
+    role: string;
+    @IsString()
+    @IsNotEmpty({message:"Không được bỏ trống!"})
+    password: string;
+}
