@@ -7,8 +7,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from 'src/controllers/auth/auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
-import { AuthGuards } from 'src/Guard/AuthGuards';
-
 @Module({
   imports: [
     ConfigModule.forRoot(),

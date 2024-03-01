@@ -9,21 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
-const roles_decorator_1 = require("./../decorator/roles.decorator");
+exports.RolesGuard = void 0;
+const core_1 = require("@nestjs/core");
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("../services/app/app.service");
-const auth_guard_1 = require("../Guard/auth.guard");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
+let RolesGuard = class RolesGuard {
+    constructor(reflector) {
+        this.reflector = reflector;
+    }
+    canActivate(context) {
+        const roles = this.reflector.getAllAndOverride('roles', [context.getHandler(), context.getClass()]);
+        if (!roles) {
+            return false;
+        }
+        const request = context.switchToHttp().getRequest();
+        const userRoles = request.headers?.role?.split(',');
+        return this.validateRoles(roles, userRoles);
+    }
+    validateRoles(roles, userRoles) {
+        return roles.some(role => userRoles.includes(role));
     }
 };
-exports.AppController = AppController;
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, roles_decorator_1.Roles)('admin', 'member'),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+exports.RolesGuard = RolesGuard;
+exports.RolesGuard = RolesGuard = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [core_1.Reflector])
+], RolesGuard);
+//# sourceMappingURL=role.guard.js.map

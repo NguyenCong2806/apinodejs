@@ -1,14 +1,11 @@
+import { Roles } from './../decorator/roles.decorator';
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from '../services/app/app.service';
-import { AuthGuards } from 'src/Guard/AuthGuards';
+import { AuthGuard } from 'src/Guard/auth.guard';
 
 @Controller()
-@UseGuards(AuthGuards)
+@UseGuards(AuthGuard)
+@Roles('admin', 'member')
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
 }
