@@ -2,7 +2,6 @@ import { UserMail } from './../../models/viewmodel/user/UserMail';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 
-
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
@@ -13,8 +12,8 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Welcome to Nice App! Confirm your Email',
-      template: './confirmation', // `.hbs` extension is appended automatically
-      context: { // ✏️ filling curly brackets with content
+      template: './confirmation',
+      context: { 
         name: user.name,
         url,
       },
