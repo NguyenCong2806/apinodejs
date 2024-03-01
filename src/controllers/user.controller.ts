@@ -20,10 +20,11 @@ import { CreateTodoDto } from '../models/viewmodel/user/CreateUserDto';
 import SerachPara from 'src/models/BaseModel/SerachPara';
 import { AuthGuard } from 'src/Guard/auth.guard';
 import { Roles } from 'src/decorator/roles.decorator';
+import * as argon2 from 'argon2';
 
 @Controller('user')
- @UseGuards(AuthGuard)
- @Roles('admin', 'member')
+@UseGuards(AuthGuard)
+@Roles('admin', 'member')
 export class UsersController {
   constructor(private readonly usersService: UserService) {}
 
@@ -46,6 +47,7 @@ export class UsersController {
   }
   @Post('adduser')
   async create(@Body() createUserDto: CreateTodoDto, @Res() res: Response) {
+    createUserDto.password = await argon2.hash(createUserDto.password);
     const respo = await this.usersService.create(createUserDto);
     res.status(HttpStatus.CREATED).json(respo);
   }
@@ -55,10 +57,20 @@ export class UsersController {
     @Body() updateTodoDto: UpdateTodoDto,
     @Res() res: Response,
   ) {
+    updateTodoDto.password = await argon2.hash(updateTodoDto.password);
     const respo = await this.usersService.update(id, updateTodoDto);
     res.status(HttpStatus.OK).json(respo);
   }
-
+  @Put('changpassword/:id')
+  async changpassword(
+    @Param('id') id: string,
+    @Body() updateTodoDto: UpdateTodoDto,
+    @Res() res: Response,
+  ) {
+    updateTodoDto.password = await argon2.hash(updateTodoDto.password);
+    const respo = await this.usersService.update(id, updateTodoDto);
+    res.status(HttpStatus.OK).json(respo);
+  }
   @Delete('deluser/:id')
   async delete(@Param('id') id: string, @Res() res: Response) {
     const respo = await this.usersService.remove(id);
