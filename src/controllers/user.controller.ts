@@ -14,18 +14,18 @@ import { Response } from 'express';
 import { User } from './../models/database/User';
 import { UserService } from 'src/services/user/user.service';
 import Paginations from 'src/models/BaseModel/Paginations';
-import { UpdateTodoDto } from './../models/viewmodel/UpdateUserDto';
-import { CreateTodoDto } from './../models/viewmodel/CreateUserDto';
+import { UpdateTodoDto } from '../models/viewmodel/user/UpdateUserDto';
+import { CreateTodoDto } from '../models/viewmodel/user/CreateUserDto';
 import SerachPara from 'src/models/BaseModel/SerachPara';
 
 @Controller('user')
 export class UsersController {
-  constructor(private readonly usersService: UserService) {}  
+  constructor(private readonly usersService: UserService) {}
 
   @Get('getall')
   async get(@Query() serachPara: SerachPara, @Res() res: Response) {
     const pagination = new Paginations<User>();
-    
+
     pagination.perPage = serachPara.pageindex;
     pagination.page = serachPara.pagesize;
     if (serachPara.keyword != null) {

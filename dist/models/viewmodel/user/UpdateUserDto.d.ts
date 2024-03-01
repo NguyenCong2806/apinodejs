@@ -1,3 +1,3 @@
-import { User } from './../database/User';
+import { User } from '../../database/User';
 export declare class UpdateTodoDto extends User {
 }
