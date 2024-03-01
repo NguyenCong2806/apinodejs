@@ -11,7 +11,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { MailModule } from './mail/mail.module';
+// import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -45,7 +45,7 @@ import { MailModule } from './mail/mail.module';
         limit: 100,
       },
     ]),
-    MailModule,
+    // MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

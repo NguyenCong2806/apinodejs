@@ -21,6 +21,7 @@ const CreateUserDto_1 = require("../models/viewmodel/user/CreateUserDto");
 const SerachPara_1 = require("../models/BaseModel/SerachPara");
 const auth_guard_1 = require("../Guard/auth.guard");
 const roles_decorator_1 = require("../decorator/roles.decorator");
+const argon2 = require("argon2");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -40,10 +41,17 @@ let UsersController = class UsersController {
         res.status(common_1.HttpStatus.OK).json(respo);
     }
     async create(createUserDto, res) {
+        createUserDto.password = await argon2.hash(createUserDto.password);
         const respo = await this.usersService.create(createUserDto);
         res.status(common_1.HttpStatus.CREATED).json(respo);
     }
     async update(id, updateTodoDto, res) {
+        updateTodoDto.password = await argon2.hash(updateTodoDto.password);
+        const respo = await this.usersService.update(id, updateTodoDto);
+        res.status(common_1.HttpStatus.OK).json(respo);
+    }
+    async changpassword(id, updateTodoDto, res) {
+        updateTodoDto.password = await argon2.hash(updateTodoDto.password);
         const respo = await this.usersService.update(id, updateTodoDto);
         res.status(common_1.HttpStatus.OK).json(respo);
     }
@@ -86,6 +94,15 @@ __decorate([
     __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "update", null);
+__decorate([
+    (0, common_1.Put)('changpassword/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "changpassword", null);
 __decorate([
     (0, common_1.Delete)('deluser/:id'),
     __param(0, (0, common_1.Param)('id')),

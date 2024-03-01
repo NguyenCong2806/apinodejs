@@ -10,5 +10,6 @@ export declare class UsersController {
     find(id: string, res: Response): Promise<void>;
     create(createUserDto: CreateTodoDto, res: Response): Promise<void>;
     update(id: string, updateTodoDto: UpdateTodoDto, res: Response): Promise<void>;
+    changpassword(id: string, updateTodoDto: UpdateTodoDto, res: Response): Promise<void>;
     delete(id: string, res: Response): Promise<void>;
 }
