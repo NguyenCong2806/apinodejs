@@ -1,14 +1,7 @@
 import { authvm } from './../../models/viewmodel/auth/authvm';
 import { UserService } from './../user/user.service';
 import { userlogin } from './../../models/viewmodel/auth/userlogin';
-import {
-  BadRequestException,
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 
