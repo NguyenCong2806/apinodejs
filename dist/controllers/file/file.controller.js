@@ -38,7 +38,6 @@ let UploadController = class UploadController {
         res.status(200).json('Xóa bỏ thành công file');
     }
     uploadFile(file, res) {
-        console.log(file);
         res.status(common_1.HttpStatus.OK).json(true);
     }
     uploadMultiple(files, res) {

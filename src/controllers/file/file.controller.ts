@@ -44,7 +44,6 @@ export class UploadController {
   @Post('file')
   @UseInterceptors(FileInterceptor('file', { storage: storage }))
   uploadFile(@UploadedFile() file, @Res() res: Response) {
-    console.log(file);
     res.status(HttpStatus.OK).json(true);
   }
 
