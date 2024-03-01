@@ -10,31 +10,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
+const authvm_1 = require("./../../models/viewmodel/auth/authvm");
+const user_service_1 = require("./../user/user.service");
 const common_1 = require("@nestjs/common");
-const user_service_1 = require("../user/user.service");
-const bcrypt = require("bcrypt");
+const argon2 = require("argon2");
 const jsonwebtoken_1 = require("jsonwebtoken");
 let AuthService = class AuthService {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async signIn(username, password) {
+    async signIn(data) {
+        const res = new authvm_1.authvm();
         const user = await this.usersService.findOneValue({
-            username: { $gte: username },
+            username: { $gte: data.username },
         });
-        const saltOrRounds = 10;
-        const hash = await bcrypt.hash(password, saltOrRounds);
-        if (await bcrypt.compare(user.password, hash)) {
-            throw new common_1.UnauthorizedException();
-        }
-        else {
-            const accessToken = jsonwebtoken_1.default.sign({ _id: user.email, name: user.username }, process.env.JWT_SECRET, {
-                expiresIn: process.env.JWT_EXPIRE,
-            });
-            const refreshToken = jsonwebtoken_1.default.sign({ _id: user.email, name: user.username }, process.env.JWT_SECRET_REFRESH, {
-                expiresIn: process.env.JWT_EXPIRE_REFRESH,
-            });
-        }
+        if (!user)
+            throw new common_1.BadRequestException('Tài khoản không tồn tại!');
+        const passwordMatches = await argon2.verify(user.password, data.password);
+        if (!passwordMatches)
+            throw new common_1.BadRequestException('Nhập sai mật khẩu!');
+        const payload = { userId: 123, role: 'admin' };
+        const secretKey = 'your-secret-key';
+        const token = jsonwebtoken_1.default.sign(payload, secretKey, { expiresIn: '1h' });
+        console.log(token);
+        res.message = 'Đăng nhập thành công';
+        res.role = user.role;
+        res.status = true;
+        res.statuscode = 200;
+        res.userid = user.id;
+        res.username = user.username;
+        res.accessToken = 'ầdasdfasdfasdfasdfasdfa4123123';
+        return res;
+    }
+    async logout() { }
+    hashData(data) {
+        return argon2.hash(data);
     }
 };
 exports.AuthService = AuthService;

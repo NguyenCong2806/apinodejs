@@ -9,17 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseEntity = void 0;
-const mongoose_1 = require("@nestjs/mongoose");
-class BaseEntity {
-}
-exports.BaseEntity = BaseEntity;
-__decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", String)
-], BaseEntity.prototype, "id", void 0);
-__decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", Date)
-], BaseEntity.prototype, "createddate", void 0);
-//# sourceMappingURL=BaseEntity.js.map
+exports.AccessTokenStrategy = void 0;
+const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
+const passport_jwt_1 = require("passport-jwt");
+let AccessTokenStrategy = class AccessTokenStrategy extends (0, passport_1.PassportStrategy)(passport_jwt_1.Strategy, 'jwt') {
+    constructor() {
+        super({
+            jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: process.env.JWT_SECRET,
+        });
+    }
+    validate(payload) {
+        return payload;
+    }
+};
+exports.AccessTokenStrategy = AccessTokenStrategy;
+exports.AccessTokenStrategy = AccessTokenStrategy = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
+], AccessTokenStrategy);
+//# sourceMappingURL=accessToken.strategy.js.map

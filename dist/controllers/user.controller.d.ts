@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { UserService } from 'src/services/user/user.service';
-import { UpdateTodoDto } from './../models/viewmodel/UpdateUserDto';
-import { CreateTodoDto } from './../models/viewmodel/CreateUserDto';
+import { UpdateTodoDto } from '../models/viewmodel/user/UpdateUserDto';
+import { CreateTodoDto } from '../models/viewmodel/user/CreateUserDto';
 import SerachPara from 'src/models/BaseModel/SerachPara';
 export declare class UsersController {
     private readonly usersService;

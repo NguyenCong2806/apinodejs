@@ -16,8 +16,8 @@ exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../services/user/user.service");
 const Paginations_1 = require("../models/BaseModel/Paginations");
-const UpdateUserDto_1 = require("./../models/viewmodel/UpdateUserDto");
-const CreateUserDto_1 = require("./../models/viewmodel/CreateUserDto");
+const UpdateUserDto_1 = require("../models/viewmodel/user/UpdateUserDto");
+const CreateUserDto_1 = require("../models/viewmodel/user/CreateUserDto");
 const SerachPara_1 = require("../models/BaseModel/SerachPara");
 let UsersController = class UsersController {
     constructor(usersService) {
