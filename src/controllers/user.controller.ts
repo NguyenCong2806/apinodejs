@@ -1,3 +1,4 @@
+import { AuthGuards } from 'src/Guard/AuthGuards';
 import {
   Body,
   Controller,
@@ -9,6 +10,7 @@ import {
   Put,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { User } from './../models/database/User';
@@ -19,6 +21,7 @@ import { CreateTodoDto } from '../models/viewmodel/user/CreateUserDto';
 import SerachPara from 'src/models/BaseModel/SerachPara';
 
 @Controller('user')
+@UseGuards(AuthGuards)
 export class UsersController {
   constructor(private readonly usersService: UserService) {}
 

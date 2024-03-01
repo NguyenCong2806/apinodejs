@@ -1,3 +1,4 @@
+import { AuthGuards } from './Guard/AuthGuards';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './module/app.module';
 import { AllExceptionFilter } from './Filter/AllExceptionFilter';

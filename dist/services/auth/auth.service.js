@@ -14,32 +14,41 @@ const authvm_1 = require("./../../models/viewmodel/auth/authvm");
 const user_service_1 = require("./../user/user.service");
 const common_1 = require("@nestjs/common");
 const argon2 = require("argon2");
-const jsonwebtoken_1 = require("jsonwebtoken");
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    constructor(usersService) {
+    constructor(usersService, jwtService) {
         this.usersService = usersService;
+        this.jwtService = jwtService;
     }
     async signIn(data) {
         const res = new authvm_1.authvm();
-        const user = await this.usersService.findOneValue({
-            username: { $gte: data.username },
-        });
+        const filter = { username: data.username };
+        const user = await this.usersService.findOneValue(filter);
+        console.log(user);
         if (!user)
             throw new common_1.BadRequestException('Tài khoản không tồn tại!');
         const passwordMatches = await argon2.verify(user.password, data.password);
         if (!passwordMatches)
             throw new common_1.BadRequestException('Nhập sai mật khẩu!');
-        const payload = { userId: 123, role: 'admin' };
-        const secretKey = 'your-secret-key';
-        const token = jsonwebtoken_1.default.sign(payload, secretKey, { expiresIn: '1h' });
-        console.log(token);
+        const payload = {
+            userId: user.email,
+            username: user.username,
+            role: user.role,
+        };
         res.message = 'Đăng nhập thành công';
         res.role = user.role;
         res.status = true;
         res.statuscode = 200;
         res.userid = user.id;
         res.username = user.username;
-        res.accessToken = 'ầdasdfasdfasdfasdfasdfa4123123';
+        res.accessToken = this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET,
+            expiresIn: process.env.JWT_EXPIRE,
+        });
+        res.refreshToken = this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET_REFRESH,
+            expiresIn: process.env.JWT_EXPIRE_REFRESH,
+        });
         return res;
     }
     async logout() { }
@@ -50,6 +59,7 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

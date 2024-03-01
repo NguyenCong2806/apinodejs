@@ -1,27 +1,37 @@
 import { authvm } from './../../models/viewmodel/auth/authvm';
 import { UserService } from './../user/user.service';
 import { userlogin } from './../../models/viewmodel/auth/userlogin';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as argon2 from 'argon2';
-import jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UserService) {}
+  constructor(
+    private usersService: UserService,
+    private jwtService: JwtService,
+  ) {}
   async signIn(data: userlogin): Promise<authvm> {
     const res = new authvm();
     // Check if user exists
-    const user = await this.usersService.findOneValue({
-      username: { $gte: data.username },
-    });
-
+    const filter = { username: data.username };
+    const user = await this.usersService.findOneValue(filter);
+    console.log(user);
     if (!user) throw new BadRequestException('Tài khoản không tồn tại!');
     const passwordMatches = await argon2.verify(user.password, data.password);
     if (!passwordMatches) throw new BadRequestException('Nhập sai mật khẩu!');
-    const payload = { userId: 123, role: 'admin' };
-    const secretKey = 'your-secret-key';
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-    console.log(token);
+    const payload = {
+      userId: user.email,
+      username: user.username,
+      role: user.role,
+    };
 
     res.message = 'Đăng nhập thành công';
     res.role = user.role;
@@ -29,14 +39,14 @@ export class AuthService {
     res.statuscode = 200;
     res.userid = user.id;
     res.username = user.username;
-    res.accessToken = 'ầdasdfasdfasdfasdfasdfa4123123';
-    // res.refreshToken = jwt.sign(
-    //   { _id: user.email, name: user.username },
-    //   process.env.JWT_SECRET_REFRESH,
-    //   {
-    //     expiresIn: process.env.JWT_EXPIRE_REFRESH,
-    //   },
-    // );
+    res.accessToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: process.env.JWT_EXPIRE,
+    });
+    res.refreshToken = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET_REFRESH,
+      expiresIn: process.env.JWT_EXPIRE_REFRESH,
+    });
     return res;
   }
 

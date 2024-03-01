@@ -15,6 +15,7 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_module_1 = require("./user.module");
 const logger_middleware_1 = require("../middlewares/logger.middleware");
 const auth_module_1 = require("./auth/auth.module");
+const jwt_1 = require("@nestjs/jwt");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
@@ -26,8 +27,9 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot(),
             mongoose_1.MongooseModule.forRoot(process.env.DATABASE_URL + process.env.DATABASE_NAME),
-            user_module_1.UsersModule,
             auth_module_1.AuthModule,
+            user_module_1.UsersModule,
+            jwt_1.JwtModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

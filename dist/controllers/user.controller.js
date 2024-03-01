@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const AuthGuards_1 = require("../Guard/AuthGuards");
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../services/user/user.service");
 const Paginations_1 = require("../models/BaseModel/Paginations");
@@ -94,6 +95,7 @@ __decorate([
 ], UsersController.prototype, "delete", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('user'),
+    (0, common_1.UseGuards)(AuthGuards_1.AuthGuards),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UsersController);
 //# sourceMappingURL=user.controller.js.map

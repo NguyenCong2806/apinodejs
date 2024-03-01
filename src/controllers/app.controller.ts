@@ -1,8 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from '../services/app/app.service';
-import { AllExceptionFilter } from '../Filter/AllExceptionFilter';
+import { AuthGuards } from 'src/Guard/AuthGuards';
 
 @Controller()
+@UseGuards(AuthGuards)
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
