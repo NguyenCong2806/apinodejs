@@ -10,12 +10,13 @@ exports.FileModule = void 0;
 const file_controller_1 = require("../../controllers/file/file.controller");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
+const jwt_1 = require("@nestjs/jwt");
 let FileModule = class FileModule {
 };
 exports.FileModule = FileModule;
 exports.FileModule = FileModule = __decorate([
     (0, common_1.Module)({
-        imports: [config_1.ConfigModule.forRoot()],
+        imports: [config_1.ConfigModule.forRoot(), jwt_1.JwtModule],
         controllers: [file_controller_1.UploadController],
     })
 ], FileModule);

@@ -8,12 +8,14 @@ import {
   HttpStatus,
   Get,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import * as multer from 'multer';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
+import { AuthGuard } from 'src/Guard/auth.guard';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -28,6 +30,7 @@ const storage = multer.diskStorage({
 });
 
 @Controller('upload')
+@UseGuards(AuthGuard)
 export class UploadController {
   @Get('getallfile')
   async getallfile(@Res() res: Response) {
