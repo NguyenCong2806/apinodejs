@@ -1,5 +1,5 @@
 import { Roles } from './../decorator/roles.decorator';
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { AppService } from '../services/app/app.service';
 import { AuthGuard } from 'src/Guard/auth.guard';
 
