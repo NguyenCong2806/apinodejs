@@ -22,6 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
+import ResultData from 'src/models/BaseModel/ResultData';
 import { IBaseRepository } from './../repository/IBaseRepository';
 import Paginations from 'src/models/BaseModel/Paginations';
 import Results from 'src/models/BaseModel/Results';
@@ -31,11 +32,14 @@ import { FilterQuery } from 'mongoose';
 export declare abstract class BaseService<M extends BaseEntity> implements IBaseService<M> {
     private readonly repository;
     constructor(repository: IBaseRepository<M>);
-    find(): Promise<M[]>;
-    create(item: M | any): Promise<boolean>;
-    update(item: Partial<M>): Promise<boolean>;
-    remove(id: string): Promise<boolean>;
+    findcondition(condition?: FilterQuery<M>): Promise<ResultData>;
+    checkkeyword(condition?: FilterQuery<M>): Promise<ResultData>;
+    countcondition(condition?: FilterQuery<M>): Promise<ResultData>;
+    find(): Promise<ResultData>;
+    create(item: M | any): Promise<ResultData>;
+    update(item: Partial<M>): Promise<ResultData>;
+    remove(id: string): Promise<ResultData>;
     finds(item: Paginations<M>): Promise<Results<M>>;
-    findOne(id: string): Promise<M>;
-    findOneValue(condition?: FilterQuery<M>): Promise<M>;
+    findOne(id: string): Promise<ResultData>;
+    findOneValue(condition?: FilterQuery<M>): Promise<ResultData>;
 }

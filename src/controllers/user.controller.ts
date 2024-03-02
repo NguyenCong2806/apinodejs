@@ -51,14 +51,13 @@ export class UsersController {
     const respo = await this.usersService.create(createUserDto);
     res.status(HttpStatus.CREATED).json(respo);
   }
-  @Put('edituser/:id')
+  @Put('edituser')
   async update(@Body() updateTodoDto: UpdateTodoDto, @Res() res: Response) {
     const respo = await this.usersService.update(updateTodoDto);
     res.status(HttpStatus.OK).json(respo);
   }
   @Put('changpassword/:id')
   async changpassword(
-    @Param('id') id: string,
     @Body() updateTodoDto: UpdateTodoDto,
     @Res() res: Response,
   ) {
