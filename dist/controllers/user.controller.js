@@ -49,7 +49,7 @@ let UsersController = class UsersController {
         const respo = await this.usersService.update(updateTodoDto);
         res.status(common_1.HttpStatus.OK).json(respo);
     }
-    async changpassword(id, updateTodoDto, res) {
+    async changpassword(updateTodoDto, res) {
         updateTodoDto.password = await argon2.hash(updateTodoDto.password);
         const respo = await this.usersService.update(updateTodoDto);
         res.status(common_1.HttpStatus.OK).json(respo);
@@ -85,7 +85,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "create", null);
 __decorate([
-    (0, common_1.Put)('edituser/:id'),
+    (0, common_1.Put)('edituser'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
@@ -94,11 +94,10 @@ __decorate([
 ], UsersController.prototype, "update", null);
 __decorate([
     (0, common_1.Put)('changpassword/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, common_1.Res)()),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto, Object]),
+    __metadata("design:paramtypes", [UpdateUserDto_1.UpdateTodoDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changpassword", null);
 __decorate([

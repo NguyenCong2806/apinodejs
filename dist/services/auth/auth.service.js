@@ -26,20 +26,20 @@ let AuthService = class AuthService {
         const user = await this.usersService.findOneValue(filter);
         if (!user)
             throw new common_1.BadRequestException('Tài khoản không tồn tại!');
-        const passwordMatches = await argon2.verify(user.password, data.password);
+        const passwordMatches = await argon2.verify(user.item.password, data.password);
         if (!passwordMatches)
             throw new common_1.BadRequestException('Nhập sai mật khẩu!');
         const payload = {
-            userId: user.email,
-            username: user.username,
-            role: user.role,
+            userId: user.item.email,
+            username: user.item.username,
+            role: user.item.role,
         };
         res.message = 'Đăng nhập thành công';
-        res.role = user.role;
+        res.role = user.item.role;
         res.status = true;
         res.statuscode = 200;
-        res.userid = user._id.toString();
-        res.username = user.username;
+        res.userid = user.item._id.toString();
+        res.username = user.item.username;
         res.accessToken = this.jwtService.sign(payload, {
             secret: process.env.JWT_SECRET,
             expiresIn: process.env.JWT_EXPIRE,

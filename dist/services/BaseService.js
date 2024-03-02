@@ -5,6 +5,15 @@ class BaseService {
     constructor(repository) {
         this.repository = repository;
     }
+    async findcondition(condition) {
+        return await this.repository.findcondition(condition);
+    }
+    async checkkeyword(condition) {
+        return await this.repository.checkkeyword(condition);
+    }
+    async countcondition(condition) {
+        return await this.repository.countcondition(condition);
+    }
     async find() {
         return await this.repository.find();
     }
