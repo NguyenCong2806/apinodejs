@@ -4,7 +4,7 @@ import Results from 'src/models/BaseModel/Results';
 
 export interface Write<M> {
   create(item: M | any): Promise<boolean>;
-  update(id: string, item: Partial<M>): Promise<boolean>;
+  update(item: Partial<M>): Promise<boolean>;
   remove(id: string): Promise<boolean>;
 }
 

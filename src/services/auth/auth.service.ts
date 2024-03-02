@@ -29,7 +29,7 @@ export class AuthService {
     res.role = user.role;
     res.status = true;
     res.statuscode = 200;
-    res.userid = user._id;
+    res.userid = user._id.toString();
     res.username = user.username;
     res.accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

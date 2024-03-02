@@ -52,13 +52,8 @@ export class UsersController {
     res.status(HttpStatus.CREATED).json(respo);
   }
   @Put('edituser/:id')
-  async update(
-    @Param('id') id: string,
-    @Body() updateTodoDto: UpdateTodoDto,
-    @Res() res: Response,
-  ) {
-    updateTodoDto.password = await argon2.hash(updateTodoDto.password);
-    const respo = await this.usersService.update(id, updateTodoDto);
+  async update(@Body() updateTodoDto: UpdateTodoDto, @Res() res: Response) {
+    const respo = await this.usersService.update(updateTodoDto);
     res.status(HttpStatus.OK).json(respo);
   }
   @Put('changpassword/:id')
@@ -68,7 +63,7 @@ export class UsersController {
     @Res() res: Response,
   ) {
     updateTodoDto.password = await argon2.hash(updateTodoDto.password);
-    const respo = await this.usersService.update(id, updateTodoDto);
+    const respo = await this.usersService.update(updateTodoDto);
     res.status(HttpStatus.OK).json(respo);
   }
   @Delete('deluser/:id')

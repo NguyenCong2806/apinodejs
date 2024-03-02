@@ -15,8 +15,8 @@ export abstract class BaseService<M extends BaseEntity>
   async create(item: M | any): Promise<boolean> {
     return await this.repository.create(item);
   }
-  async update(id: string, item: Partial<M>): Promise<boolean> {
-    return await this.repository.update(id, item);
+  async update(item: Partial<M>): Promise<boolean> {
+    return await this.repository.update(item._id, item);
   }
   async remove(id: string): Promise<boolean> {
     return await this.repository.delete(id);

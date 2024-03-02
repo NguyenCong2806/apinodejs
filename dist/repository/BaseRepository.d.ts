@@ -26,7 +26,7 @@ import { IBaseRepository } from './IBaseRepository';
 import { BaseEntity } from './../models/database/BaseEntity';
 import Paginations from 'src/models/BaseModel/Paginations';
 import Results from 'src/models/BaseModel/Results';
-import { Model, FilterQuery } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 export declare abstract class BaseRepository<T extends BaseEntity> implements IBaseRepository<T> {
     private readonly _model;
     protected constructor(_model: Model<T>);
