@@ -45,14 +45,13 @@ let UsersController = class UsersController {
         const respo = await this.usersService.create(createUserDto);
         res.status(common_1.HttpStatus.CREATED).json(respo);
     }
-    async update(id, updateTodoDto, res) {
-        updateTodoDto.password = await argon2.hash(updateTodoDto.password);
-        const respo = await this.usersService.update(id, updateTodoDto);
+    async update(updateTodoDto, res) {
+        const respo = await this.usersService.update(updateTodoDto);
         res.status(common_1.HttpStatus.OK).json(respo);
     }
     async changpassword(id, updateTodoDto, res) {
         updateTodoDto.password = await argon2.hash(updateTodoDto.password);
-        const respo = await this.usersService.update(id, updateTodoDto);
+        const respo = await this.usersService.update(updateTodoDto);
         res.status(common_1.HttpStatus.OK).json(respo);
     }
     async delete(id, res) {
@@ -87,11 +86,10 @@ __decorate([
 ], UsersController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)('edituser/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __param(2, (0, common_1.Res)()),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, UpdateUserDto_1.UpdateTodoDto, Object]),
+    __metadata("design:paramtypes", [UpdateUserDto_1.UpdateTodoDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "update", null);
 __decorate([

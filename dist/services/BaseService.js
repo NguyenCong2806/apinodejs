@@ -11,8 +11,8 @@ class BaseService {
     async create(item) {
         return await this.repository.create(item);
     }
-    async update(id, item) {
-        return await this.repository.update(id, item);
+    async update(item) {
+        return await this.repository.update(item._id, item);
     }
     async remove(id) {
         return await this.repository.delete(id);

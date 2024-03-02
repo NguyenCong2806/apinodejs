@@ -44,7 +44,7 @@ class BaseRepository {
     }
     async findOne(id) {
         try {
-            return (await this._model.findById(id));
+            return (await this._model.findById(id).exec());
         }
         catch (error) {
             throw new Error(error.message);
@@ -77,9 +77,8 @@ class BaseRepository {
     }
     async update(id, item) {
         try {
-            return await this._model.findOneAndUpdate({ _id: id }, item, {
-                new: true,
-            });
+            await this._model.findOneAndUpdate({ _id: id }, item);
+            return true;
         }
         catch (error) {
             throw new Error(error.message);

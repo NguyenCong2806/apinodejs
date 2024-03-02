@@ -33,7 +33,7 @@ export declare abstract class BaseService<M extends BaseEntity> implements IBase
     constructor(repository: IBaseRepository<M>);
     find(): Promise<M[]>;
     create(item: M | any): Promise<boolean>;
-    update(id: string, item: Partial<M>): Promise<boolean>;
+    update(item: Partial<M>): Promise<boolean>;
     remove(id: string): Promise<boolean>;
     finds(item: Paginations<M>): Promise<Results<M>>;
     findOne(id: string): Promise<M>;

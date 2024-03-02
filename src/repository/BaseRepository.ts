@@ -2,7 +2,7 @@ import { IBaseRepository } from './IBaseRepository';
 import { BaseEntity } from './../models/database/BaseEntity';
 import Paginations from 'src/models/BaseModel/Paginations';
 import Results from 'src/models/BaseModel/Results';
-import { Model, FilterQuery } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
 export abstract class BaseRepository<T extends BaseEntity>
   implements IBaseRepository<T>
@@ -47,7 +47,7 @@ export abstract class BaseRepository<T extends BaseEntity>
 
   async findOne(id: any): Promise<T> {
     try {
-      return (await this._model.findById(id)) as T;
+      return (await this._model.findById(id).exec()) as T;
     } catch (error: any) {
       throw new Error(error.message);
     }
@@ -76,9 +76,8 @@ export abstract class BaseRepository<T extends BaseEntity>
   }
   async update(id: any, item: T): Promise<boolean> {
     try {
-      return await this._model.findOneAndUpdate({ _id: id }, item, {
-        new: true,
-      });
+      await this._model.findOneAndUpdate({ _id: id }, item);
+      return true;
     } catch (error: any) {
       throw new Error(error.message);
     }
